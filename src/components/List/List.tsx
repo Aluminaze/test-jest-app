@@ -12,7 +12,9 @@ const List = (props: ListProps) => {
     return (
       <ul className={classes.list}>
         {items.map((item: string) => (
-          <li key={item}>{item}</li>
+          <li className={classes.listItem} key={item}>
+            {item}
+          </li>
         ))}
       </ul>
     );

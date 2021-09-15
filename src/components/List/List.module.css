@@ -1,5 +1,17 @@
 .list {
   padding: 5px;
-  border: 1px solid gray;
   border-radius: 5px;
+  padding: 10px 25px;
+}
+
+.listItem {
+  color: #f4e6c1;
+  margin: 5px 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.listItem:hover {
+  transform: scale(1.1);
 }
