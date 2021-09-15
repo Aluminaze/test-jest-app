@@ -1,0 +1,27 @@
+.app {
+  background-color: #157575;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #157575;
+  box-shadow: 1px 5px 5px 0px rgba(226, 228, 231, 0.5);
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.content {
+  display: flex;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+}
