@@ -1,9 +1,11 @@
 import React from "react";
+import cn from "classnames";
+import classes from "./Search.module.css";
 
 interface SearchProps {
   children?: React.ReactNode;
   value: string;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 }
 
@@ -14,10 +16,17 @@ const Search = (props: SearchProps): JSX.Element => {
     onChange,
     placeholder = "start search...",
   } = props;
+
+  const inputClasses = cn({
+    [classes.input]: true,
+    [classes.inputFilled]: Boolean(value.length),
+  });
+
   return (
-    <div>
+    <div className={classes.search}>
       {children ? children : "Search:"}
       <input
+        className={inputClasses}
         type="text"
         value={value}
         onChange={onChange}

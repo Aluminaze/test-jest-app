@@ -1,0 +1,17 @@
+.search {
+  padding: 20px;
+}
+
+.input {
+  background-color: gray;
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.input::placeholder {
+  color: white;
+}
+
+.inputFilled {
+  background-color: bisque;
+}
