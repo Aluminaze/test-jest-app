@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Search from "components/Search";
 
 const onChange = jest.fn();
@@ -20,5 +21,13 @@ describe("Search component", () => {
 
     expect(screen.getByText(/input for search:/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/go.../)).toBeInTheDocument();
+  });
+
+  it("Search when typing", () => {
+    render(<Search value="" onChange={onChange} />);
+
+    userEvent.type(screen.getByRole("textbox"), "script");
+
+    expect(onChange).toHaveBeenCalledTimes(6);
   });
 });

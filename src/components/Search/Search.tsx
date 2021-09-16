@@ -17,7 +17,12 @@ const Search = (props: SearchProps): JSX.Element => {
   return (
     <div>
       {children ? children : "Search:"}
-      <input value={value} onChange={onChange} placeholder={placeholder} />
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
     </div>
   );
 };
