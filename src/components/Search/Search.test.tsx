@@ -30,4 +30,19 @@ describe("Search component", () => {
 
     expect(onChange).toHaveBeenCalledTimes(6);
   });
+
+  it("Check input is filled", () => {
+    render(<Search value="some text for searching" onChange={onChange} />);
+    const inputElem = screen.getByRole("textbox");
+
+    expect(inputElem).toHaveClass("input");
+    expect(inputElem).toHaveClass("inputFilled");
+  });
+
+  it("Check input hasn't class filled", () => {
+    render(<Search value="" onChange={onChange} />);
+    const inputElem = screen.getByRole("textbox");
+    expect(inputElem).toHaveClass("input");
+    expect(inputElem).not.toHaveClass("inputFilled");
+  });
 });
