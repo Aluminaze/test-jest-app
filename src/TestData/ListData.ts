@@ -1,8 +1,10 @@
 export const listData: string[] = [
-  "html",
-  "css",
-  "react",
-  "typescript",
-  "scss",
-  "less",
+  "HTML5",
+  "CSS",
+  "JavaScript",
+  "React",
+  "Redux",
+  "TypeScript",
+  "SCSS",
+  "LESS",
 ];
