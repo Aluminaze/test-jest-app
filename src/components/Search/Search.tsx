@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import cn from "classnames";
 import classes from "./Search.module.css";
 
@@ -16,17 +16,24 @@ const Search = (props: SearchProps): JSX.Element => {
     onChange,
     placeholder = "start search...",
   } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const inputClasses = cn({
     [classes.input]: true,
     [classes.inputFilled]: Boolean(value.length),
   });
 
+  useEffect(() => {
+    inputRef.current?.focus();
+    console.log("FOCUS WHEN COMPONENT DID MOUNT");
+  }, []);
+
   return (
     <div className={classes.search}>
       {children ? children : "Search:"}
       <input
         className={inputClasses}
+        ref={inputRef}
         type="text"
         value={value}
         onChange={onChange}
