@@ -13,16 +13,14 @@ describe("App component:", () => {
   });
 
   it("search work correctly", async () => {
-    await act(async () => {
-      render(<App />);
-    });
+    render(<App />);
 
     const inputElem = screen.getByRole("textbox");
     expect(inputElem).toBeInTheDocument();
 
     userEvent.type(inputElem, "script");
-    expect(screen.queryByText(/javascript/i)).toBeInTheDocument();
-    expect(screen.queryByText(/typescript/i)).toBeInTheDocument();
+    expect(await screen.findByText(/javascript/i)).toBeInTheDocument();
+    expect(await screen.findByText(/typescript/i)).toBeInTheDocument();
     expect(screen.queryByText(/SCSS/i)).not.toBeInTheDocument();
   });
 });
