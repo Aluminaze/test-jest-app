@@ -3,10 +3,14 @@ import classes from "./App.module.css";
 import List from "components/List";
 import { listData } from "TestData/ListData";
 import Search from "components/Search";
+import axios from "axios";
 
 function getUserData() {
   return Promise.resolve(() => ({ id: 77, name: "Artem" }));
 }
+
+const GET_CITIES_URL =
+  "https://countriesnow.space/api/v0.1/countries/population/cities";
 
 function App() {
   const [value, setValue] = useState<string>("");
@@ -14,6 +18,7 @@ function App() {
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
     setValue(e.target.value);
   const [userData, setUserData] = useState<any | null>(null);
+  const [cities, setCities] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,6 +41,14 @@ function App() {
     }
   }, [value]);
 
+  const handleFetchCities = async () => {
+    const data = await axios
+      .get(GET_CITIES_URL)
+      .then((data) => data.data?.data);
+    const topCities = data?.length ? data.slice(0, 10) : [];
+    setCities(topCities);
+  };
+
   return (
     <div className={classes.app}>
       <header className={classes.header}>
@@ -45,6 +58,18 @@ function App() {
       <div className={classes.content}>
         <Search value={value} onChange={onChangeSearch} />
         <List items={data} />
+
+        <div className={classes.cities}>
+          <button onClick={handleFetchCities}>Fetch cities</button>
+
+          <ul className={classes.citiesList}>
+            {cities.map((city: any) => (
+              <li key={city.city}>
+                {city.city} ({city.country})
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

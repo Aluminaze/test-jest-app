@@ -26,3 +26,14 @@
   margin-top: 80px;
   min-height: calc(100vh - 80px);
 }
+
+.cities {
+  display: flex;
+  flex-direction: column;
+}
+
+.citiesList {
+  margin: 15px 0;
+  color: white;
+  list-style: none;
+}
