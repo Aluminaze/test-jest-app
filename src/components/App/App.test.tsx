@@ -1,8 +1,26 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
+import axios from "axios";
+
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+const cities: any[] = [
+  {
+    city: "Paris",
+    country: "France",
+  },
+  {
+    city: "Berlin",
+    country: "German",
+  },
+  {
+    city: "Tokyo",
+    country: "Japan",
+  },
+];
 
 describe("App component:", () => {
   it("renders learn react link", async () => {
@@ -22,5 +40,27 @@ describe("App component:", () => {
     expect(await screen.findByText(/javascript/i)).toBeInTheDocument();
     expect(await screen.findByText(/typescript/i)).toBeInTheDocument();
     expect(screen.queryByText(/SCSS/i)).not.toBeInTheDocument();
+  });
+
+  it("test axios request", async () => {
+    mockedAxios.get.mockResolvedValue({ data: { data: cities } });
+    await act(async () => {
+      render(<App />);
+    });
+
+    const fetchBtn = screen.getByRole("button");
+    expect(fetchBtn).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(fetchBtn);
+    });
+
+    const listCities = screen.getByTestId("cities");
+
+    expect(listCities).toBeInTheDocument();
+    const { getAllByRole } = within(listCities);
+
+    const listItems = getAllByRole("listitem");
+    expect(listItems).toHaveLength(cities.length);
   });
 });

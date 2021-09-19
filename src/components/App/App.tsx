@@ -62,7 +62,7 @@ function App() {
         <div className={classes.cities}>
           <button onClick={handleFetchCities}>Fetch cities</button>
 
-          <ul className={classes.citiesList}>
+          <ul className={classes.citiesList} data-testid="cities">
             {cities.map((city: any) => (
               <li key={city.city}>
                 {city.city} ({city.country})
