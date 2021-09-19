@@ -25,7 +25,6 @@ const Search = (props: SearchProps): JSX.Element => {
 
   useEffect(() => {
     inputRef.current?.focus();
-    console.log("FOCUS WHEN COMPONENT DID MOUNT");
   }, []);
 
   return (
