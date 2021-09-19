@@ -6,12 +6,10 @@ import { act } from "react-dom/test-utils";
 
 describe("App component:", () => {
   it("renders learn react link", async () => {
-    await act(async () => {
-      render(<App />);
-    });
+    render(<App />);
 
-    expect(screen.queryByText(/test application/i)).toBeInTheDocument();
-    expect(screen.queryByText(/logged in as:/i)).toBeInTheDocument();
+    expect(screen.getByText(/test application/i)).toBeInTheDocument();
+    expect(await screen.findByText(/logged in as:/i)).toBeInTheDocument();
   });
 
   it("search work correctly", async () => {
