@@ -1,5 +1,5 @@
-import { Auth } from "components/App/App";
 import React, { useContext } from "react";
+import { Auth } from "components/App/App";
 import { Redirect, Route } from "react-router";
 
 const PrivateRoute = (props: any): JSX.Element => {
@@ -14,7 +14,6 @@ const PrivateRoute = (props: any): JSX.Element => {
           return children;
         }
 
-        console.log("~ location", location);
         return (
           <Redirect
             to={{
