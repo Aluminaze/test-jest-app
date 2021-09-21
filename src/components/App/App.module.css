@@ -5,11 +5,11 @@
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
   height: 80px;
   position: fixed;
+  padding: 0 25px;
   top: 0;
   left: 0;
   right: 0;
@@ -21,19 +21,17 @@
   font-weight: 600;
 }
 
+.nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav > li {
+  list-style: none;
+}
+
 .content {
   display: flex;
   margin-top: 80px;
   min-height: calc(100vh - 80px);
-}
-
-.cities {
-  display: flex;
-  flex-direction: column;
-}
-
-.citiesList {
-  margin: 15px 0;
-  color: white;
-  list-style: none;
 }
