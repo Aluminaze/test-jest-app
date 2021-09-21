@@ -1,0 +1,10 @@
+.cities {
+  display: flex;
+  flex-direction: column;
+}
+
+.citiesList {
+  margin: 15px 0;
+  color: white;
+  list-style: none;
+}
