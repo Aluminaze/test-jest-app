@@ -49,9 +49,11 @@ function App() {
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/cities" component={CitiesPage} />
             <PrivateRoute exact path="/search">
               <SearchPage />
+            </PrivateRoute>
+            <PrivateRoute exact path="/cities">
+              <CitiesPage />
             </PrivateRoute>
             <Route path="*" component={Exception404Page} />
           </Switch>
