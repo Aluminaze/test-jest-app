@@ -5,9 +5,10 @@ import { Switch, Route, Link } from "react-router-dom";
 import Landing from "components/LandingPage";
 import SearchPage from "components/SearchPage";
 import CitiesPage from "components/CitiesPage";
+import Exception404Page from "components/Exception404Page";
 
 function getUserData() {
-  return Promise.resolve(() => ({ id: 77, name: "Artem" }));
+  return Promise.resolve(() => ({ id: 0, name: "User" }));
 }
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/" component={Landing} />
           <Route exact path="/search" component={SearchPage} />
           <Route exact path="/cities" component={CitiesPage} />
+          <Route path="*" component={Exception404Page} />
         </Switch>
       </div>
     </div>
