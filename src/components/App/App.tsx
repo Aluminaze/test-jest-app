@@ -1,54 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import classes from "./App.module.css";
-
 import { Switch, Route, Link } from "react-router-dom";
 import Landing from "components/LandingPage";
 import SearchPage from "components/SearchPage";
 import CitiesPage from "components/CitiesPage";
 import Exception404Page from "components/Exception404Page";
+import LoginPage from "components/LoginPage";
+import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 
-function getUserData() {
-  return Promise.resolve(() => ({ id: 0, name: "User" }));
-}
+export const Auth = createContext({
+  isAuthorized: false,
+  login: () => {},
+  logout: () => {},
+});
 
 function App() {
-  const [userData, setUserData] = useState<any | null>(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const data = await getUserData();
-      setUserData(data);
-    };
-
-    fetchUserData();
-  }, []);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   return (
-    <div className={classes.app}>
-      <header className={classes.header}>
-        <ul className={classes.nav}>
-          <li>
-            <Link to="/">Landing</Link>
-          </li>
-          <li>
-            <Link to="/search">Search</Link>
-          </li>
-          <li>
-            <Link to="/cities">Cities</Link>
-          </li>
-        </ul>
-        <div>{userData && <span>User: {userData?.name}</span>}</div>
-      </header>
+    <Auth.Provider
+      value={{
+        isAuthorized,
+        login: () => setIsAuthorized(true),
+        logout: () => setIsAuthorized(false),
+      }}
+    >
+      <div className={classes.app}>
+        <header className={classes.header}>
+          <ul className={classes.nav}>
+            <li>
+              <Link to="/">Landing</Link>
+            </li>
+            <li>
+              <Link to="/search">Search</Link>
+            </li>
+            <li>
+              <Link to="/cities">Cities</Link>
+            </li>
+          </ul>
+          <div>
+            {isAuthorized && (
+              <button onClick={() => setIsAuthorized(false)}>Sign out</button>
+            )}
+          </div>
+        </header>
 
-      <div className={classes.content}>
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/search" component={SearchPage} />
-          <Route exact path="/cities" component={CitiesPage} />
-          <Route path="*" component={Exception404Page} />
-        </Switch>
+        <div className={classes.content}>
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/cities" component={CitiesPage} />
+            <PrivateRoute exact path="/search">
+              <SearchPage />
+            </PrivateRoute>
+            <Route path="*" component={Exception404Page} />
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Auth.Provider>
   );
 }
 
