@@ -1,6 +1,12 @@
 .app {
   background-color: #ffffff;
   position: relative;
+  overflow: hidden auto;
+  max-height: 100vh;
+}
+
+.app::-webkit-scrollbar {
+  width: 25px;
 }
 
 .header {
