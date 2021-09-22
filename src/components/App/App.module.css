@@ -1,5 +1,5 @@
 .app {
-  background-color: #157575;
+  background-color: #ffffff;
   position: relative;
 }
 
@@ -13,7 +13,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: #157575;
+  background-color: #ffffff;
   box-shadow: 1px 5px 5px 0px rgba(226, 228, 231, 0.5);
   color: white;
   text-transform: uppercase;

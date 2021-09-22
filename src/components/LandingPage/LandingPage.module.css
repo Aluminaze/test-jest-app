@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+}
+
+.title {
+  color: #c99b67;
+}
+
+.block {
+  background-color: #0a775f;
+  border-radius: 15px;
+  width: 100%;
+  height: 300px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+}
