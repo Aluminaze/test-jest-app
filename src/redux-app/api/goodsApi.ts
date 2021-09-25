@@ -1,16 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+interface Product {
+  id: number;
+  name: string;
+}
+
+type Products = Product[];
+
 export const goodsApi = createApi({
   reducerPath: "goodsApi",
   tagTypes: ["Products"],
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/" }),
   endpoints: (buldier) => ({
-    getGoods: buldier.query<any, void>({
+    getGoods: buldier.query<Products, void>({
       query: () => `goods`,
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }: any) => ({
+              ...result.map(({ id }: Product) => ({
                 type: "Products" as const,
                 id,
               })),
@@ -18,7 +25,7 @@ export const goodsApi = createApi({
             ]
           : [{ type: "Products", id: "LIST" }],
     }),
-    addProduct: buldier.mutation({
+    addProduct: buldier.mutation<Product, Partial<Product>>({
       query: (body) => ({
         url: `goods`,
         method: "POST",
