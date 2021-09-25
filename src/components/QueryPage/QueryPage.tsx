@@ -1,10 +1,10 @@
-import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useAddProductMutation, useGetGoodsQuery } from "redux-app";
 
 const QueryPage = () => {
   const [productName, setProductName] = useState("");
   const { data: goods = [], isLoading: isGoodsLoading } = useGetGoodsQuery();
-  const [addProduct, { isError }] = useAddProductMutation();
+  const [addProduct] = useAddProductMutation();
 
   if (isGoodsLoading) return <h2>Data is loading...</h2>;
 
