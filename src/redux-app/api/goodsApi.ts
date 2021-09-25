@@ -7,7 +7,14 @@ export const goodsApi = createApi({
     getGoods: buldier.query<any, void>({
       query: () => `goods`,
     }),
+    addProduct: buldier.mutation({
+      query: (body) => ({
+        url: `goods`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetGoodsQuery } = goodsApi;
+export const { useGetGoodsQuery, useAddProductMutation } = goodsApi;
