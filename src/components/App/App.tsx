@@ -7,6 +7,7 @@ import CitiesPage from "components/CitiesPage";
 import Exception404Page from "components/Exception404Page";
 import LoginPage from "components/LoginPage";
 import PrivateRoute from "components/PrivateRoute/PrivateRoute";
+import QueryPage from "components/QueryPage";
 
 export const Auth = createContext({
   isAuthorized: false,
@@ -15,7 +16,7 @@ export const Auth = createContext({
 });
 
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
 
   return (
     <Auth.Provider
@@ -37,6 +38,9 @@ function App() {
             <li>
               <Link to="/cities">Cities</Link>
             </li>
+            <li>
+              <Link to="/query">Query</Link>
+            </li>
           </ul>
           <div>
             {isAuthorized && (
@@ -54,6 +58,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path="/cities">
               <CitiesPage />
+            </PrivateRoute>
+            <PrivateRoute exact path="/query">
+              <QueryPage />
             </PrivateRoute>
             <Route path="*" component={Exception404Page} />
           </Switch>
