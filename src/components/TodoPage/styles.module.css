@@ -15,6 +15,7 @@
 
 .content h1 {
   text-align: center;
+  font-size: 1.5rem;
 }
 
 .list {
@@ -42,8 +43,15 @@
   border-bottom: 1px solid #ffffff;
   margin-bottom: 10px;
   padding-bottom: 10px;
+  font-size: 1.2rem;
 }
 
 .listItem span {
-  min-height: 100px;
+  font-size: 1rem;
+}
+
+.addTodo {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
 }
