@@ -1,34 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import classes from "./styles.module.css";
 import api from "api";
-
-export interface TodoItem {
-  id: string;
-  title: string;
-  text: string;
-}
-
-const useCreateTodo = () => {
-  const client = useQueryClient();
-
-  const mutation = useMutation(
-    (newTodo: TodoItem) => api.fetchAddTodo(newTodo),
-    {
-      async onMutate(newTodo) {
-        const prevTodos = client.getQueriesData("todos");
-
-        await client.setQueriesData("todos", (oldTodos: any) => {
-          return [...oldTodos, { ...newTodo }];
-        });
-
-        return () => client.setQueriesData("todos", prevTodos);
-      },
-    }
-  );
-
-  return mutation;
-};
+import useCreateTodo from "hooks";
+import { TodoItem } from "types";
 
 const TodoPage = () => {
   const { data: todoData = [], isLoading } = useQuery("todos", api.fetchTodos);
