@@ -28,26 +28,37 @@
 
 .listItem {
   display: flex;
-  flex-direction: column;
-  background-color: #002339;
   border-radius: 10px;
   padding: 15px;
+  background-color: #002339;
+  gap: 10px;
 }
 
-.listItem h2,
-.listItem span {
+.listItemContent {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+}
+
+.listItemContent h2,
+.listItemContent span {
   color: #e4cfa9;
 }
 
-.listItem h2 {
+.listItemContent h2 {
   border-bottom: 1px solid #ffffff;
   margin-bottom: 10px;
   padding-bottom: 10px;
   font-size: 1.2rem;
 }
 
-.listItem span {
+.listItemContent span {
   font-size: 1rem;
+}
+
+.listItemBtn button {
+  width: 25px;
+  height: 25px;
 }
 
 .fieldset {

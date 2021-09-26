@@ -7,7 +7,7 @@ export const useCreateTodo = () => {
   const client = useQueryClient();
 
   const mutation = useMutation(
-    (newTodo: TodoItem) => api.fetchCreateTodo(newTodo),
+    (payload: TodoItem) => api.fetchCreateTodo(payload),
     {
       onMutate: async (payload: TodoItem) => {
         await client.cancelQueries("todos");

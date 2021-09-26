@@ -13,6 +13,11 @@ const api = {
 
     return response.data;
   },
+  async fetchDeleteTodo(id: string) {
+    const response = await axios.delete(BASE_URL + `todo/${id}`);
+
+    return response.data;
+  },
 };
 
 export default api;
