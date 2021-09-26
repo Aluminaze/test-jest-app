@@ -7,6 +7,11 @@ const api = {
     const response = await axios.get(BASE_URL + "todo");
     return response.data;
   },
+  async fetchAddTodo(body: any) {
+    const response = await axios.post(BASE_URL + "todo", body);
+
+    return response.data;
+  },
 };
 
 export default api;
