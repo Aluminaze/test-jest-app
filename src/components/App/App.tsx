@@ -8,6 +8,7 @@ import Exception404Page from "components/Exception404Page";
 import LoginPage from "components/LoginPage";
 import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 import QueryPage from "components/QueryPage";
+import TodoPage from "components/TodoPage";
 
 export const Auth = createContext({
   isAuthorized: false,
@@ -41,6 +42,9 @@ function App() {
             <li>
               <Link to="/query">Query</Link>
             </li>
+            <li>
+              <Link to="/todo">TODO</Link>
+            </li>
           </ul>
           <div>
             {isAuthorized && (
@@ -61,6 +65,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path="/query">
               <QueryPage />
+            </PrivateRoute>
+            <PrivateRoute exact path="/todo">
+              <TodoPage />
             </PrivateRoute>
             <Route path="*" component={Exception404Page} />
           </Switch>
