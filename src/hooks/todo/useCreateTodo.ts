@@ -3,7 +3,7 @@ import api from "api";
 import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
 
-const useCreateTodo = () => {
+export const useCreateTodo = () => {
   const client = useQueryClient();
 
   const mutation = useMutation(
@@ -23,5 +23,3 @@ const useCreateTodo = () => {
 
   return mutation;
 };
-
-export default useCreateTodo;

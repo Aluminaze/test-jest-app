@@ -1,13 +1,11 @@
 import React, { ChangeEvent, useState } from "react";
-import { useQuery } from "react-query";
 import classes from "./styles.module.css";
-import api from "api";
-import useCreateTodo from "hooks";
+import * as hooks from "hooks";
 import { TodoItem } from "types";
 
 const TodoPage = () => {
-  const { data: todoData = [], isLoading } = useQuery("todos", api.fetchTodos);
-  const createTodoM = useCreateTodo();
+  const { data: todoData = [], isLoading } = hooks.useFetchTodos();
+  const createTodoM = hooks.useCreateTodo();
   const [newTitle, setNewTitle] = useState<string>("");
   const [newText, setNewText] = useState<string>("");
   const [isFetching, setIsFetching] = useState<boolean>(false);
