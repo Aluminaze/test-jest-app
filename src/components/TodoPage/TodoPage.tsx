@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import classes from "./styles.module.css";
 import api from "api";
 
@@ -9,18 +9,49 @@ export interface TodoItem {
   text: string;
 }
 
+const useCreateTodo = () => {
+  const client = useQueryClient();
+
+  const mutation = useMutation(
+    (newTodo: TodoItem) => api.fetchAddTodo(newTodo),
+    {
+      async onMutate(newTodo) {
+        const prevTodos = client.getQueriesData("todos");
+
+        await client.setQueriesData("todos", (oldTodos: any) => {
+          return [...oldTodos, { ...newTodo }];
+        });
+
+        return () => client.setQueriesData("todos", prevTodos);
+      },
+    }
+  );
+
+  return mutation;
+};
+
 const TodoPage = () => {
   const { data: todoData = [], isLoading } = useQuery("todos", api.fetchTodos);
-  const { mutate } = useMutation((newTodo: TodoItem) => {
-    return api.fetchAddTodo(newTodo);
-  });
+  const createTodoM = useCreateTodo();
   const [newTitle, setNewTitle] = useState<string>("");
   const [newText, setNewText] = useState<string>("");
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const handleCreateTodo = () => {
-    mutate({ id: String(Number(new Date())), title: newTitle, text: newText });
-    setNewTitle("");
-    setNewText("");
+  const handleCreateTodo = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      setIsFetching(true);
+      await createTodoM.mutateAsync({
+        id: String(Number(new Date())),
+        title: newTitle,
+        text: newText,
+      });
+    } finally {
+      setIsFetching(false);
+      setNewTitle("");
+      setNewText("");
+    }
   };
 
   if (isLoading) {
@@ -30,6 +61,29 @@ const TodoPage = () => {
   return (
     <div className={classes.container}>
       <div className={classes.content}>
+        <form className={classes.form} onSubmit={handleCreateTodo}>
+          <fieldset className={classes.fieldset} disabled={isFetching}>
+            <label htmlFor="title">Title:</label>
+            <input
+              type="text"
+              name="title"
+              value={newTitle}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setNewTitle(e.target.value)
+              }
+            />
+            <label htmlFor="text">Text:</label>
+            <input
+              type="text"
+              title="text"
+              value={newText}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setNewText(e.target.value)
+              }
+            />
+            <input type="submit" value="Create todo" />
+          </fieldset>
+        </form>
         <h1>TODO LIST</h1>
 
         {Boolean(todoData.length) && (
@@ -42,26 +96,6 @@ const TodoPage = () => {
             ))}
           </ul>
         )}
-
-        <div className={classes.addTodo}>
-          <label>Title:</label>
-          <input
-            type="text"
-            value={newTitle}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setNewTitle(e.target.value)
-            }
-          />
-          <label>Text:</label>
-          <input
-            type="text"
-            value={newText}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setNewText(e.target.value)
-            }
-          />
-          <button onClick={handleCreateTodo}>Create Todo</button>
-        </div>
       </div>
     </div>
   );
