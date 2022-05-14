@@ -1,3 +1,4 @@
+import { IPassengerDto } from "./../interfaces/index";
 import { TodoItem } from "types/index";
 import axios from "axios";
 
@@ -21,3 +22,18 @@ const api = {
 };
 
 export default api;
+
+interface IGetPassengerDataResponse {
+  data: IPassengerDto[];
+  totalPages: number;
+  totalPassengers: number;
+}
+
+export const getPassengerData = async (
+  currentPage = 0,
+  size = 10
+): Promise<IGetPassengerDataResponse> => {
+  const url = `https://api.instantwebtools.net/v1/passenger?page=${currentPage}&size=${size}`;
+
+  return axios.get(url).then((resp) => resp.data);
+};
