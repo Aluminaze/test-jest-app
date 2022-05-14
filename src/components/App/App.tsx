@@ -9,6 +9,7 @@ import LoginPage from "components/LoginPage";
 import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 import QueryPage from "components/QueryPage";
 import TodoPage from "components/TodoPage";
+import { TablePage } from "components/TablePage";
 
 export const Auth = createContext({
   isAuthorized: false,
@@ -43,7 +44,7 @@ function App() {
               <Link to="/query">Query</Link>
             </li>
             <li>
-              <Link to="/todo">TODO</Link>
+              <Link to="/table">TablePage</Link>
             </li>
           </ul>
           <div>
@@ -57,6 +58,9 @@ function App() {
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/login" component={LoginPage} />
+            <PrivateRoute exact path="/table">
+              <TablePage />
+            </PrivateRoute>
             <PrivateRoute exact path="/search">
               <SearchPage />
             </PrivateRoute>
