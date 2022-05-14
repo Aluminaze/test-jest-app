@@ -1,4 +1,4 @@
-import { IPassengerDto } from "./../interfaces/index";
+import { IPassengerDto } from "interfaces";
 import { TodoItem } from "types/index";
 import axios from "axios";
 
@@ -30,10 +30,35 @@ interface IGetPassengerDataResponse {
 }
 
 export const getPassengerData = async (
-  currentPage = 0,
+  currentPage = 1,
   size = 10
 ): Promise<IGetPassengerDataResponse> => {
   const url = `https://api.instantwebtools.net/v1/passenger?page=${currentPage}&size=${size}`;
 
-  return axios.get(url).then((resp) => resp.data);
+  const { data } = await axios.get(url);
+
+  return data;
+};
+
+interface IGetPassengerDataResponseInfinityScroll
+  extends IGetPassengerDataResponse {
+  info: {
+    currentPage: number;
+  };
+}
+
+export const getPassengerDataForInfinityScroll = async (
+  currentPage = 1,
+  size = 10
+): Promise<IGetPassengerDataResponseInfinityScroll> => {
+  const url = `https://api.instantwebtools.net/v1/passenger?page=${currentPage}&size=${size}`;
+
+  const { data } = await axios.get(url);
+
+  return {
+    ...data,
+    info: {
+      currentPage,
+    },
+  };
 };
