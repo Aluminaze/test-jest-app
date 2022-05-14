@@ -7,7 +7,17 @@ export const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
   },
-  block: {
+  blockTable: {
     margin: "20px 0",
+  },
+  blockPagination: {
+    margin: "20px 0",
+    display: "flex",
+    flexBasis: "100%",
+    justifyContent: "center",
+  },
+  blockSetting: {
+    display: "flex",
+    gap: "10px",
   },
 }));

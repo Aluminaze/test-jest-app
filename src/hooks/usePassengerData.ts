@@ -6,10 +6,10 @@ interface IUsePassengerDataParams {
   size: number;
 }
 
-export const usePassengerData = (params: IUsePassengerDataParams) => {
+export const usePassengerData = (currentPage: number, size: number) => {
   return useQuery(
-    "passengers",
-    () => getPassengerData(params.currentPage, params.size),
+    ["passengers", { pageSize: size, currentPage: currentPage }],
+    () => getPassengerData(currentPage, size),
     {
       retry: 0,
       refetchOnWindowFocus: false,
