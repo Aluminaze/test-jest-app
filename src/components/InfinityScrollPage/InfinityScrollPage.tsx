@@ -1,12 +1,14 @@
 import { getPassengerDataForInfinityScroll } from "api";
 import { IPassengerDto } from "interfaces";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
-
+import { useInView } from "react-intersection-observer";
 import { useStyles } from "./styles";
 
 export const InfinityScrollPage = (): JSX.Element => {
   const classes = useStyles();
+
+  const { ref, inView } = useInView();
 
   const {
     isLoading,
@@ -32,6 +34,12 @@ export const InfinityScrollPage = (): JSX.Element => {
     }
   );
 
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
   return (
     <div className={classes.container}>
       <h1>Infinity Scroll</h1>
@@ -46,7 +54,11 @@ export const InfinityScrollPage = (): JSX.Element => {
           )}
       </div>
       {hasNextPage && (
-        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+        <button
+          ref={ref}
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+        >
           {isFetchingNextPage ? "LOADING..." : "Load more..."}
         </button>
       )}
