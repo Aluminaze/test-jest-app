@@ -1,9 +1,9 @@
 import { usePassengerData } from "hooks/usePassengerData";
-import { IPassengerDto } from "interfaces";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useStyles } from "./styles";
 import Pagination from "@mui/material/Pagination";
+import { useTable } from "react-table";
 
 export const TablePage = () => {
   const classes = useStyles();
@@ -15,7 +15,6 @@ export const TablePage = () => {
     maxItemsPerPage
   );
 
-  const passengerData: IPassengerDto[] = passengers?.data ?? [];
   const maxPages: number | null = passengers?.totalPages ?? 0;
 
   const handleChangePage = (
@@ -24,6 +23,40 @@ export const TablePage = () => {
   ) => {
     setCurrentPage(value);
   };
+
+  const columns: any = useMemo(
+    () => [
+      {
+        Header: "ИД",
+        accessor: "idPassenger",
+      },
+      {
+        Header: "Имя пассажира",
+        accessor: "namePassenger",
+      },
+      {
+        Header: "Кол-во поездок",
+        accessor: "tripCounts",
+      },
+    ],
+    []
+  );
+
+  const data = useMemo(() => {
+    if (passengers?.data) {
+      return passengers?.data?.map((data) => ({
+        idPassenger: data._id,
+        namePassenger: data.name,
+        tripCounts: data.trips,
+      }));
+    } else return [];
+  }, [passengers?.data]);
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data,
+    });
 
   return (
     <div className={classes.container}>
@@ -40,10 +73,34 @@ export const TablePage = () => {
 
       <div className={classes.blockTable}>
         {isLoadingPassengers && <span>LOADING...</span>}
-        {!isLoadingPassengers &&
-          passengerData.map((passenger: IPassengerDto, index: number) => (
-            <li key={index}>{passenger._id}</li>
-          ))}
+
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup: any) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column: any) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row: any, i: number) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell: any) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
 
       {maxPages > 0 && (
