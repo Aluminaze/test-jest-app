@@ -50,7 +50,7 @@ export const TablePage = () => {
         tripCounts: data.trips,
       }));
     } else return [];
-  }, [passengers?.data]);
+  }, [passengers]);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
