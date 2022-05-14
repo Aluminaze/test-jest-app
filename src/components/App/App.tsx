@@ -10,6 +10,7 @@ import PrivateRoute from "components/PrivateRoute/PrivateRoute";
 import QueryPage from "components/QueryPage";
 import TodoPage from "components/TodoPage";
 import { TablePage } from "components/TablePage";
+import { InfinityScrollPage } from "components/InfinityScrollPage";
 
 export const Auth = createContext({
   isAuthorized: false,
@@ -44,7 +45,10 @@ function App() {
               <Link to="/query">Query</Link>
             </li>
             <li>
-              <Link to="/table">TablePage</Link>
+              <Link to="/table">Table</Link>
+            </li>
+            <li>
+              <Link to="/infinity-scroll">Infinity Scroll</Link>
             </li>
           </ul>
           <div>
@@ -60,6 +64,9 @@ function App() {
             <Route exact path="/login" component={LoginPage} />
             <PrivateRoute exact path="/table">
               <TablePage />
+            </PrivateRoute>
+            <PrivateRoute exact path="/infinity-scroll">
+              <InfinityScrollPage />
             </PrivateRoute>
             <PrivateRoute exact path="/search">
               <SearchPage />
