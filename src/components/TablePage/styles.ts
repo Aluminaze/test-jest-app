@@ -6,6 +6,8 @@ export const useStyles = makeStyles(() => ({
     padding: "20px",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "gray",
+  },
+  block: {
+    margin: "20px 0",
   },
 }));
